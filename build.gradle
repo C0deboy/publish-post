@@ -1,0 +1,41 @@
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version '1.2.51'
+    id 'edu.sc.seis.launch4j' version '2.4.4'
+    id 'application'
+}
+
+mainClassName = "pl.devcave.ToolKt"
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'pl.devcave.ToolKt'
+    }
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+}
+
+launch4j {
+    mainClassName = 'pl.devcave.ToolKt'
+    icon = "${projectDir}/src/main/resources/publish-blog.ico"
+    headerType = "console"
+    outfile = "Publish blog.exe"
+}
+
+group 'blog'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+    compile "org.seleniumhq.selenium:selenium-java:3.141.59"
+    compile "com.beust:jcommander:1.71"
+}
+
+compileKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+compileTestKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
