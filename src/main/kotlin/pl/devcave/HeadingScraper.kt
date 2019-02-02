@@ -41,7 +41,7 @@ object HeadingScraper {
 
         """.trimIndent()
 
-    fun scrapPostImage() {
+    fun scrapPostImage(): String {
 
         SeleniumConfig.use {
             val driver = SeleniumConfig.getDriver()
@@ -52,9 +52,14 @@ object HeadingScraper {
 
             val headingElement = driver.findElement(headingSelector)
 
+
             driver.executeScript(headingFixScript)
 
             getHeadingImage(driver, headingElement)
+
+            val postTitle = headingElement.findElement(By.cssSelector(".post-title")).text
+
+            return postTitle!!
 
         }
     }

@@ -9,5 +9,5 @@ object Settings {
 
     @Parameter(names = ["-d", "--delay"], description = "Number of seconds to wait before scraping image heading.")
     var scrapImageDelay = 10L
-        get() = field * 1000L
+        get() { return if (scrapOnly) 0 else field * 1000L }
 }

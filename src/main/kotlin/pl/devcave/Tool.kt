@@ -23,7 +23,11 @@ fun main(args: Array<String>) {
 
         Logger.doing("Committing new post")
 
-        Cmd.bash.execute("cd /mnt/e/Projects/devcave/_site && git add -A && git commit -m \"new post\"")
+        Cmd.bash.execute("goblog && cd _site && git add -A && git commit -m \"new post\"")
+
+        Logger.doing("Pushing new post")
+
+        Cmd.bash.execute("goblog && cd _site && git push origin HEAD")
     }
 
     val delay = Settings.scrapImageDelay
@@ -31,7 +35,8 @@ fun main(args: Array<String>) {
     Logger.doing("Scrapping post image and opening fb in ${delay / 1000L} seconds")
 
     Timer().schedule(delay) {
-        HeadingScraper.scrapPostImage()
+        val postTile = HeadingScraper.scrapPostImage()
+        println("Scrapped for: $postTile")
         Cmd.execute("start https://www.facebook.com/devcavepl/ && PAUSE")
     }
 
